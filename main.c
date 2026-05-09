@@ -213,6 +213,7 @@ typedef enum {
  * GLOBAL VARIABLES (Protected by Mutex)
  *============================================================================*/
 static volatile GateState_t gateState = STATE_IDLE_CLOSED;
+static volatile uint32_t securityActive = 0;  /* 1 if current movement was initiated by security */
 
 /*============================================================================
  * RTOS HANDLES
@@ -466,6 +467,7 @@ static void vSafetyTask(void *pvParameters)
 
                 /* Stop completely - go to STOPPED_MIDWAY */
                 SetGateState(STATE_STOPPED_MIDWAY);
+                securityActive = 0;
                 printf(" Reverse complete. Gate STOPPED_MIDWAY\n");
             }
         }
@@ -500,6 +502,7 @@ static void vGateControlTask(void *pvParameters)
             currentState = GetGateState();
             if (currentState == STATE_OPENING || currentState == STATE_REVERSING) {
                 SetGateState(STATE_IDLE_OPEN);
+                securityActive = 0;
                 printf("[GATE] Open limit reached -> IDLE_OPEN\n");
             }
         }
@@ -508,6 +511,7 @@ static void vGateControlTask(void *pvParameters)
             currentState = GetGateState();
             if (currentState == STATE_CLOSING) {
                 SetGateState(STATE_IDLE_CLOSED);
+                securityActive = 0;
                 printf("[GATE] Closed limit reached -> IDLE_CLOSED\n");
             }
         }
@@ -520,9 +524,19 @@ static void vGateControlTask(void *pvParameters)
             if (evt == EVT_MANUAL_RELEASE) {
                 if (currentState == STATE_OPENING || currentState == STATE_CLOSING) {
                     SetGateState(STATE_STOPPED_MIDWAY);
+                    securityActive = 0;
                     printf("[GATE] Manual mode released -> STOPPED_MIDWAY\n");
                 }
                 continue;
+            }
+
+            /* Security priority: ignore driver commands if security is actively
+               commanding OR if current movement was security-initiated */
+            if (evt == EVT_DRIVER_OPEN || evt == EVT_DRIVER_CLOSE) {
+                if (Read_SecurityClose() || Read_SecurityOpen() || securityActive) {
+                    printf("[GATE] Driver command ignored (Security has priority)\n");
+                    continue;
+                }
             }
 
             /* Determine if this is an OPEN or CLOSE command */
@@ -539,6 +553,7 @@ static void vGateControlTask(void *pvParameters)
                         if (!manualActive) {
                             /* AUTO MODE: second press = STOP */
                             SetGateState(STATE_STOPPED_MIDWAY);
+                            securityActive = 0;
                             printf("[GATE][AUTO] OPEN pressed again -> STOPPED_MIDWAY\n");
                         }
                         /* MANUAL MODE: ignore (gate keeps moving) */
@@ -547,6 +562,7 @@ static void vGateControlTask(void *pvParameters)
                     case STATE_CLOSING:
                         /* Change direction to OPENING (both modes) */
                         SetGateState(STATE_OPENING);
+                        if (evt == EVT_SECURITY_OPEN) securityActive = 1;
                         printf("[GATE] OPEN pressed -> direction change -> OPENING\n");
                         break;
 
@@ -554,6 +570,7 @@ static void vGateControlTask(void *pvParameters)
                     case STATE_STOPPED_MIDWAY:
                         /* Gate is stopped: start OPENING (both modes) */
                         SetGateState(STATE_OPENING);
+                        securityActive = (evt == EVT_SECURITY_OPEN) ? 1 : 0;
                         if (manualActive) {
                             printf("[GATE][MANUAL] OPEN pressed -> OPENING (hold SW2)\n");
                         } else {
@@ -582,6 +599,7 @@ static void vGateControlTask(void *pvParameters)
                         if (!manualActive) {
                             /* AUTO MODE: second press = STOP */
                             SetGateState(STATE_STOPPED_MIDWAY);
+                            securityActive = 0;
                             printf("[GATE][AUTO] CLOSE pressed again -> STOPPED_MIDWAY\n");
                         }
                         /* MANUAL MODE: ignore (gate keeps moving) */
@@ -590,6 +608,7 @@ static void vGateControlTask(void *pvParameters)
                     case STATE_OPENING:
                         /* Change direction to CLOSING (both modes) */
                         SetGateState(STATE_CLOSING);
+                        if (evt == EVT_SECURITY_CLOSE) securityActive = 1;
                         printf("[GATE] CLOSE pressed -> direction change -> CLOSING\n");
                         break;
 
@@ -597,6 +616,7 @@ static void vGateControlTask(void *pvParameters)
                     case STATE_STOPPED_MIDWAY:
                         /* Gate is stopped: start CLOSING (both modes) */
                         SetGateState(STATE_CLOSING);
+                        securityActive = (evt == EVT_SECURITY_CLOSE) ? 1 : 0;
                         if (manualActive) {
                             printf("[GATE][MANUAL] CLOSE pressed -> CLOSING (hold SW2)\n");
                         } else {

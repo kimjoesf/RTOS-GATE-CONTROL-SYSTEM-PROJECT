@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\embedded_project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\embedded_project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Sat May  9 16:28:15 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6240002: Last Updated: Sat May  9 17:53:39 2026
 <BR><P>
 <H3>Maximum Stack Usage =        292 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1768,7 +1768,7 @@ Local Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[79]"></a>vSafetyTask</STRONG> (Thumb, 100 bytes, Stack size 16 bytes, main.o(.text.vSafetyTask))
+<P><STRONG><a name="[79]"></a>vSafetyTask</STRONG> (Thumb, 112 bytes, Stack size 16 bytes, main.o(.text.vSafetyTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = vSafetyTask &rArr; SetGateState &rArr; xQueueGenericSend &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
@@ -1784,23 +1784,25 @@ Local Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueGenericSend
 <LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_ManualMode
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_ManualMode
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Obstacle
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_ClosedLimit
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_OpenLimit
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SecurityClose
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SecurityOpen
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_DriverClose
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_DriverOpen
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SecurityClose
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SecurityOpen
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_DriverClose
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_DriverOpen
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[7b]"></a>vGateControlTask</STRONG> (Thumb, 600 bytes, Stack size 48 bytes, main.o(.text.vGateControlTask))
+<P><STRONG><a name="[7b]"></a>vGateControlTask</STRONG> (Thumb, 820 bytes, Stack size 48 bytes, main.o(.text.vGateControlTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = vGateControlTask &rArr; SetGateState &rArr; xQueueGenericSend &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueReceive
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueSemaphoreTake
-<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_ManualMode
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_ManualMode
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SecurityClose
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SecurityOpen
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetGateState
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetGateState
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf
@@ -1849,20 +1851,22 @@ Local Symbols
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vSafetyTask
 </UL>
 
-<P><STRONG><a name="[d6]"></a>Read_DriverOpen</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_DriverOpen))
+<P><STRONG><a name="[d8]"></a>Read_DriverOpen</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_DriverOpen))
 <BR><BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vInputTask
 </UL>
 
-<P><STRONG><a name="[d7]"></a>Read_DriverClose</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_DriverClose))
+<P><STRONG><a name="[d9]"></a>Read_DriverClose</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_DriverClose))
 <BR><BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vInputTask
 </UL>
 
-<P><STRONG><a name="[d8]"></a>Read_SecurityOpen</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_SecurityOpen))
-<BR><BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vInputTask
+<P><STRONG><a name="[d6]"></a>Read_SecurityOpen</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_SecurityOpen))
+<BR><BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vGateControlTask
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vInputTask
 </UL>
 
-<P><STRONG><a name="[d9]"></a>Read_SecurityClose</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_SecurityClose))
-<BR><BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vInputTask
+<P><STRONG><a name="[d5]"></a>Read_SecurityClose</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_SecurityClose))
+<BR><BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vGateControlTask
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vInputTask
 </UL>
 
 <P><STRONG><a name="[da]"></a>Read_OpenLimit</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_OpenLimit))
@@ -1877,7 +1881,7 @@ Local Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vInputTask
 </UL>
 
-<P><STRONG><a name="[d5]"></a>Read_ManualMode</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_ManualMode))
+<P><STRONG><a name="[d7]"></a>Read_ManualMode</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(.text.Read_ManualMode))
 <BR><BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vGateControlTask
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vInputTask
 </UL>
@@ -2161,8 +2165,8 @@ Local Symbols
 <P><STRONG><a name="[c7]"></a>prvSampleTimeNow</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, timers.o(.text.prvSampleTimeNow))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = prvSampleTimeNow &rArr; prvSwitchTimerLists &rArr; prvProcessExpiredTimer &rArr; prvReloadTimer &rArr; prvInsertTimerInActiveList &rArr; vListInsert
 </UL>
-<BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvSwitchTimerLists
-<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
+<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvSwitchTimerLists
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvProcessReceivedCommands
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvProcessTimerOrBlockTask
@@ -2174,8 +2178,8 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvReloadTimer
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uxListRemove
 </UL>
-<BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvSwitchTimerLists
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvProcessTimerOrBlockTask
+<BR>[Called By]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvProcessTimerOrBlockTask
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvSwitchTimerLists
 </UL>
 
 <P><STRONG><a name="[c0]"></a>prvInsertTimerInActiveList</STRONG> (Thumb, 134 bytes, Stack size 32 bytes, timers.o(.text.prvInsertTimerInActiveList))

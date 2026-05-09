@@ -27,25 +27,25 @@ Project File Date:  05/07/2026
 <h2>Output:</h2>
 *** Using Compiler 'V6.24', folder: 'C:\Users\pc\AppData\Local\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target_1'
-compiling clib_os.c...
 compiling stdin_itm.c...
 compiling os_systick.c...
+compiling clib_os.c...
 compiling retarget_io.c...
 compiling system_TM4C123.c...
-assembling startup_TM4C123.s...
 compiling stdout_itm.c...
-compiling freertos_evr.c...
+assembling startup_TM4C123.s...
 compiling main.c...
-compiling list.c...
-compiling event_groups.c...
-compiling port.c...
+compiling freertos_evr.c...
 compiling cmsis_os2.c...
+compiling list.c...
+compiling port.c...
+compiling event_groups.c...
 compiling heap_4.c...
 compiling timers.c...
 compiling queue.c...
 compiling tasks.c...
 linking...
-Program Size: Code=19754 RO-data=1806 RW-data=12 ZI-data=20200  
+Program Size: Code=19986 RO-data=1862 RW-data=12 ZI-data=20200  
 ".\Objects\embedded_project.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -114,21 +114,21 @@ Package Vendor: Keil
       Source file:   CMSIS/RTOS2/Source/os_systick.c
 
    * Component: ARM::CMSIS:RTOS2:FreeRTOS&Cortex-M@11.2.0
+      Source file:   CMSIS/RTOS2/FreeRTOS/Source/clib_os.c
       Include file:  CMSIS/RTOS2/FreeRTOS/Include/freertos_mpool.h
       Source file:   CMSIS/RTOS2/FreeRTOS/Source/cmsis_os2.c
-      Source file:   CMSIS/RTOS2/FreeRTOS/Source/clib_os.c
 
    * Component: ARM::RTOS&FreeRTOS:Config&CMSIS RTOS2@11.2.0
       Include file:  CMSIS/RTOS2/FreeRTOS/Config/FreeRTOSConfig.h
 
    * Component: ARM::RTOS&FreeRTOS:Core&Cortex-M@11.2.0
-      Include file:  Source/include/queue.h
-      Include file:  Source/include/semphr.h
-      Include file:  Source/include/task.h
+      Source file:   Source/queue.c
       Source file:   Source/list.c
       Source file:   Source/tasks.c
       Include file:  Source/include/FreeRTOS.h
-      Source file:   Source/queue.c
+      Include file:  Source/include/queue.h
+      Include file:  Source/include/semphr.h
+      Include file:  Source/include/task.h
       Source file:   Source/portable/GCC/ARM_CM4F/port.c
       Source file:   CMSIS/RTOS2/FreeRTOS/Source/freertos_evr.c
 
@@ -140,8 +140,8 @@ Package Vendor: Keil
       Source file:   Source/portable/MemMang/heap_4.c
 
    * Component: ARM::RTOS&FreeRTOS:Timers@11.2.0
-      Source file:   Source/timers.c
       Include file:  Source/include/timers.h
+      Source file:   Source/timers.c
 
    * Component: CMSIS-Compiler:STDIN(API)@1.1.0
       Include file:  include/retarget_stdin.h
@@ -156,9 +156,9 @@ Package Vendor: Keil
       Include file:  CMSIS/RTOS2/Include/cmsis_os2.h
 
    * Component: Keil::Device:Startup@1.0.1
+      Source file:   Device/Source/system_TM4C123.c
       Include file:  Device/Include/TM4C123/TM4C123.h
       Source file:   Device/Source/ARM/startup_TM4C123.s
-      Source file:   Device/Source/system_TM4C123.c
 Build Time Elapsed:  00:00:01
 </pre>
 </body>

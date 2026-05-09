@@ -28,6 +28,7 @@ This is an embedded systems project that simulates a **smart parking garage gate
 - Controls a gate that can open, close, stop, and reverse
 - Accepts commands from two sources: a **driver** (car driver panel) and a **security** (guard panel)
 - **Security commands have priority** over driver commands
+- A movement started by the **security panel** locks out the **driver panel** until the security action stops or completes
 - Detects obstacles during gate closing and performs emergency reversal
 - Provides visual feedback through LEDs (green = opening, red = closing)
 - Reports system state through a debug terminal
@@ -168,6 +169,14 @@ The system has two control panels:
 
 **Security commands ALWAYS override driver commands.** If both panels give conflicting commands, security wins. This applies in both Auto and Manual modes.
 
+In the current implementation, security priority is stronger than a one-time override:
+- If security presses **OPEN** or **CLOSE**, that command takes effect immediately.
+- While a security button is active, any driver **OPEN/CLOSE** command is ignored.
+- If the current gate movement was started by security, the driver panel stays blocked for that movement.
+- Driver control returns only after the security action ends or the movement stops/completes.
+
+This means the driver cannot perform another action until security stops controlling the gate.
+
 ---
 
 ## 6. Gate State Machine
@@ -265,7 +274,9 @@ The gate operates as a Finite State Machine (FSM) with 6 states:
    - Same direction button pressed → STOP
    - Opposite direction button pressed → change direction
    - Button pressed from idle → start moving
-4. Security commands are always honored
+4. Gives security commands priority over driver commands
+5. Ignores driver commands while security is actively commanding the gate
+6. Keeps driver commands blocked if the current movement was initiated by security, until that action stops or completes
 
 ### Task 4: LED Control Task (Priority 2 - MEDIUM)
 
@@ -520,14 +531,16 @@ Green LED: ON  | Red LED: OFF
 | 4    | Press SW1 during OPENING  | NOTHING happens (obstacle ignored)           |
 
 ### Test 6: Security Priority
-**Goal**: Verify security panel overrides driver panel.
+**Goal**: Verify security panel overrides driver panel and blocks driver input during a security-initiated action.
 
 | Step | Action                      | Expected Result                            |
 |------|-----------------------------|--------------------------------------------|
 | 1    | Press PE1 (Driver CLOSE)    | Gate starts CLOSING                        |
 | 2    | Press PB0 (Security OPEN)   | Gate changes to OPENING (security wins)    |
-| 3    | Press PE0 (Driver OPEN)     | Gate starts OPENING                        |
-| 4    | Press PB1 (Security CLOSE)  | Gate changes to CLOSING (security wins)    |
+| 3    | Press PE0 or PE1 (Driver) while security action is still active | IGNORED, security still owns the action |
+| 4    | Stop the security action or let it finish | Driver lock is cleared |
+| 5    | Press PE1 (Driver CLOSE)    | Driver command is accepted again           |
+| 6    | Press PB1 (Security CLOSE) during a driver action | Gate changes to CLOSING immediately (security wins) |
 
 ### Test 7: Ignore Invalid Commands
 **Goal**: Verify system ignores meaningless commands.
